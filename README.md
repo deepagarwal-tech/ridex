@@ -1,12 +1,38 @@
 # Ridex — Full App (Backend + Frontend)
 
+> Want to deploy this online (e.g. for a resume link)? See **[DEPLOYMENT.md](./DEPLOYMENT.md)**.
+
 This package contains two folders:
 
-- **`backend/`** — the Spring Boot API (Java 17, Maven, H2 in-memory database)
+- **`backend/`** — the Spring Boot API (Java 17, Maven, H2 file-based database — data persists between restarts)
 - **`frontend/`** — the React dashboard (Vite, Node.js)
 
 You need **both running at the same time** — the frontend talks to the
 backend over HTTP.
+
+## Quick start (one command)
+
+**Windows:**
+```
+start.bat
+```
+
+**Mac/Linux:**
+```
+./start.sh
+```
+
+This starts both the backend and frontend for you — on Windows it opens
+two separate windows (one per process) so you can see their logs; on
+Mac/Linux it runs both in the background and writes `backend.log` /
+`frontend.log` in this folder (press Ctrl+C in that terminal to stop both).
+
+Wait about 10-15 seconds, then open **http://localhost:5173**.
+
+If you'd rather start them manually (e.g. to see backend output more
+clearly), see the step-by-step instructions below.
+
+## Manual start (two terminals)
 
 ## 1. Start the backend first
 
@@ -64,6 +90,5 @@ You should see the Ridex dashboard. From here you can:
   `vite` will usually offer an alternative port automatically — but then
   update `BASE_URL` in `frontend/src/api.js` and the allowed origin in
   `backend/src/main/java/com/ridex/config/CorsConfig.java` to match).
-- **Data disappears after restarting the backend** → expected, H2 is
-  in-memory only. See `backend/README.md` for notes on switching to a
-  persistent database.
+- **Want a clean slate** → stop the backend and delete the `backend/data/`
+  folder. It will be recreated empty next time you start the backend.
